@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import './App.css'
 
+import github from './github-icon.svg'
+
 function App() {
 
   // Declare Interface to ensure data being received is correct
@@ -78,7 +80,7 @@ function App() {
       </nav>
       <section>
         <ul>
-    { filteredTalentList ? 
+    { filteredTalentList.length ? 
     (filters.location !== '' ? filteredTalentList : talentList).map((talent: { name: string }) => {
       return <li data-testid="talent" key={talent.name} >{talent.name}</li>
     })
@@ -92,7 +94,7 @@ function App() {
     </section>
     </main>
     <footer>
-    <a className="gitHubLink fa" href="https://github.com/joinSamBalboa" target="_blank" rel="noreferrer" >Created by Jason Abimbola</a>
+    <a  href="https://github.com/joinSamBalboa" target="_blank" rel="noreferrer"><img src={github} alt="github logo" /> Created by Jason Abimbola</a>
     </footer>
     
     </>
