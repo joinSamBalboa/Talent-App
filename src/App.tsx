@@ -15,7 +15,7 @@ function App() {
   // States for talent list and filters
   const [ talentList, setTalentList ] = useState<Talent[]>([])
   const [ filteredTalentList, setFilteredTalentList ] = useState<Talent[]>([])
-  const [ filters, setFilters ] = useState({ location: '' })
+  const [ filters, setFilters ] = useState({ searchTerm: '' })
 
 
   // Get Talent list
@@ -55,8 +55,9 @@ function App() {
 
   // Listening for updates on talent list and filters and updating filteredTalentList
   useEffect(() => {
+    const regexSearch = new RegExp(filters.searchTerm, 'i')
     setFilteredTalentList(talentList.filter((talent: { location: string }) => {
-      return (filters.location === talent.location.toLowerCase() || filters.location === 'All')
+      return regexSearch.test(talent.location)
     }))
   }, [filters, talentList])
   
@@ -68,26 +69,19 @@ function App() {
     <main>
     
       <nav>
-      <p>Filter talent by location:</p>
-    <select onChange={handleFilterChange} name="location" data-testid="filter" value={filters.location}>
-        <option value="All">All</option>
-        <option value="springfield">Springfield</option>
-        <option value="los angeles">Los Angeles</option>
-        <option value="philidelphia">Philidelphia</option>
-        <option value="south park">South Park</option>
-        <option value="bikini bottom">Bikini Bottom</option>
-      </select>
+      <p>Search talent by location:</p>
+      <input onChange={handleFilterChange} data-testid="search" name="searchTerm" value={filters.searchTerm}/>
       </nav>
       <section>
         <ul>
     { filteredTalentList.length ? 
-    (filters.location !== '' ? filteredTalentList : talentList).map((talent: { name: string }) => {
+    (filters.searchTerm !== '' ? filteredTalentList : talentList).map((talent: { name: string }) => {
       return <li data-testid="talent" key={talent.name} >{talent.name}</li>
     })
 
     : 
 
-    <p>No talent currently at {filters.location} in our database</p>
+    <p>No talent currently at {filters.searchTerm} in our database</p>
     
     }
     </ul>

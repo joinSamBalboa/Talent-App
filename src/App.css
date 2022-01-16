@@ -7,16 +7,16 @@
 header{
   background-color: skyblue;
   padding: 20px;
-  font-family: 'Cinzel Decorative', cursive;
+  font-family: 'Cinzel Decorative';
   text-align: center;
 }
 
 nav{
   display: flex;
-  margin: 40px 0;
+  margin: 40px 10px;
   font-weight: bold;
 }
-select:hover{
+input:hover{
   cursor: pointer;
 }
 ul{
@@ -56,12 +56,12 @@ footer img{
   }
   nav{
     font-size: 30px;
-    justify-content: space-around;
+    justify-content: center;
   }
   nav p{
     margin: 0;
   }
-  nav select{
+  nav input{
     margin: 0;
   }
   li{

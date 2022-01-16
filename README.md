@@ -20,3 +20,7 @@ To build an app that allows uders to filter an array of supplied talent, and out
 - Saw no need of separating sections into individual components.
 - Also decided against sass as it was quite a simple app.
 
+# Amendments
+- Changed from filtering location to just searching, to allow user to search other locations not on the select element options.
+
+
