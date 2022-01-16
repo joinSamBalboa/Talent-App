@@ -1,11 +1,11 @@
 # Talent App
 
 # Brief
-To build an app that allows uders to filter an array of supplied talent, and output the names of talent whose location matches the location supplied. 
+To build an app that allows users to filter an array of supplied talent, and output the names of talent whose location matches the location supplied. 
 
 # Installation & Testing
 - Yarn add react
-- Yarn add cypress (In package.json scripts add: "cypress:open": "cypress open")
+- Yarn add cypress
 - yarn cypress:open to run test
 
 # Run
