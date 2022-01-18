@@ -15,7 +15,7 @@ function App() {
   // States for talent list and filters
   const [ talentList, setTalentList ] = useState<Talent[]>([])
   const [ filteredTalentList, setFilteredTalentList ] = useState<Talent[]>([])
-  const [ filters, setFilters ] = useState({ searchTerm: '' })
+  const [ filters, setFilters ] = useState({ searchTerm: '', age: 0 })
 
 
   // Get Talent list
@@ -49,18 +49,27 @@ function App() {
 
   // Handle updates to select input
   const handleFilterChange = (event: any) => {
-    const newObj = { ...filters, [event.target.name]: event.target.value }
+    const value = event.target.name === 'age' ? Number(event.target.value) : event.target.value
+    const newObj = { ...filters, [event.target.name]: value }
     setFilters(newObj)
   }
+
+  console.log(filters)
+
+  
+  
 
   // Listening for updates on talent list and filters and updating filteredTalentList
   useEffect(() => {
     const regexSearch = new RegExp(filters.searchTerm, 'i')
-    setFilteredTalentList(talentList.filter((talent: { location: string }) => {
-      return regexSearch.test(talent.location)
+    const todaysDate = new Date()
+    setFilteredTalentList(talentList.filter((talent: { location: string, date_of_birth: string }) => {
+      const age: any = (todaysDate.getTime() - (new Date(talent.date_of_birth).getTime()))/(1000*60*60*24*364)
+      return regexSearch.test(talent.location) && (Math.floor(age) === filters.age)
     }))
   }, [filters, talentList])
-  
+
+
   return (
     <>
     <header>
@@ -71,17 +80,19 @@ function App() {
       <nav>
       <p>Search talent by location:</p>
       <input onChange={handleFilterChange} data-testid="search" name="searchTerm" value={filters.searchTerm}/>
+      <p>Search talent by age:</p>
+      <input onChange={handleFilterChange}  name="age" type="number" value={filters.age}/>
       </nav>
       <section>
         <ul>
     { filteredTalentList.length ? 
-    (filters.searchTerm !== '' ? filteredTalentList : talentList).map((talent: { name: string }) => {
-      return <li data-testid="talent" key={talent.name} >{talent.name}</li>
+    (filters.searchTerm !== '' && filters.age !== 0  ? filteredTalentList : talentList).map((talent: { name: string }) => {
+      return <li data-testid="talent" key={talent.name}>{talent.name}</li>
     })
 
     : 
 
-    <p>No talent currently at {filters.searchTerm} in our database</p>
+    <p>No talent currently in our database with that location/age</p>
     
     }
     </ul>
